@@ -27,8 +27,7 @@ jobs:
         with:
           project: "github-pr-dependency-check"
           path: "."
-          format: "ALL"
-          out: "dependency-check-report"
+          format: "HTML"
           args: >
             --failOnCVSS 7
             --enableExperimental
@@ -36,12 +35,11 @@ jobs:
       # -----------------------
       # Upload Dependency-Check report
       # -----------------------
-      - name: Upload dependency-check report
-        if: always()
-        uses: actions/upload-artifact@v4
+      - name: Upload Test results
+        uses: actions/upload-artifact@master
         with:
-          name: dependency-check-report
-          path: dependency-check-report
+           name: Depcheck report
+           path: ${{github.workspace}}/reports
 
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25
